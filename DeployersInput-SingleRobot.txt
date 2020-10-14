@@ -1,0 +1,2241 @@
+
+   D€P£O¥€R$ v1.0 June 2020
+   
+Emergence of complex societies and economic systems from 
+rational activity driven by subjective evaluations
+
+Martin Jaraiz, Univ. of Valladolid, Spain
+mjaraiz@ele.uva.es
+
+Notes can be written outside the main {} definition fields.
+Each curly bracket { } and = sign must be isolated.
+	
+bWriteTransactions: boolean (0,1), write to file _DeployersOutput.c
+WriteIndivN= -1: TheState activity
+WriteIndivN= 332: indiv. 332 activity
+WriteIndivN= 1000332: activity of Producers of indiv332
+
+MaxUnusedTimestps: inactivity months before closing down a Producer
+ProducerAssignmentPer1000: probability to suggest a new Producer every month
+
+Only the first MaxNplotCurves goods are plotted,
+reorder the goods list at your convenience before running the simulation
+
+goodsIwish:
+indiv = 
+-1 : the State
+-9 : all individuals
+12 : individual 12
+
+Add/remove a * to the four main keywords to 
+deactivate/activate an example:
+
+===============================================
+Examples 1 and 2.- A Settlers or Robots colony:
+set bRobotsColony to 0 or 1. Restart the program.
+==================================================
+
+*CONTROL_VARIABLES {
+	
+	0	 bRobotsColony
+	0	 bSingleRobot
+	
+	120   nYears
+	1000  nIndividuals
+	
+	1  PlotEveryNsteps
+	3  LineWidth
+	8  MaxNplotCurves
+	200  MaxNplotIndividuals
+	
+	1	bWriteTransactions
+	0  WriteIndivN
+
+	0	bFixedPrices	
+
+	10  MaxNBanks
+	1000000  MonetaryBasePerCapita
+	1  LiabilityRatePer1000
+	3  AssetRatePer1000
+	200000  BanksInitCapital
+	2  BanksRateFactor
+	1  ReserveRatioPer100
+	
+	15	VATPer100
+	20	TaxPer100
+	10  PayUnemplPer100
+	
+	48  MaxUnusedTimestps
+	1000  ProducerAssignmentPer1000
+
+	40  nMaxInteractingNeighbors
+	120  PriceProfitPer100
+	120  PriceAdaptDefaultPer100
+}
+
+*GOODS {
+	
+	assemble_CHAIR
+	set_right_on_leftframe
+	assemble_leftframe
+	set_seat
+	get_seat
+	get_right
+	get_left
+	get_rear
+	get_front
+	get_back
+	
+	set_TABLE
+	set_bowl_on_smalldinner
+	get_bowl
+	set_small_on_dinner
+	get_small
+	set_dinnerplate
+	get_dinnerplate
+	set_knife
+	set_fork
+	set_spoon
+	set_mug
+	set_glass
+
+	
+	home_n
+	car_n
+	truck10tm_n
+	roads_km
+	hydrElDam_n
+	energy_Mwh
+	
+	cart2tm_n
+	trousers_n
+	energy_kwh
+	machinery_m3
+	window_n
+	leather_m2
+	meat_kg
+	brickmortar_m
+	cow_n
+	wheat_kg
+	land_10m2
+	bread_kg
+	cotton_kg
+	glass_m2
+	wood_kg
+	tar_tm
+	rubber_kg
+	coal_kg
+	metal_kg
+	
+	door_n
+	tools_kg
+	
+	building_100m2
+	
+	jacket_n
+	trsp10tm_km
+	trsp2tm_km
+	shoes_n
+}
+
+indiv = 
+-1 : the State
+-9 : all individuals
+12 : individual 12
+
+*GOODS_I_WISH {
+	
+	year = 0
+	month = 0
+	indiv = -9
+	{
+		jacket_n = 0
+		shoes_n = 0
+		car_n = 1
+		home_n = 1
+	}
+	
+	year = 9990
+	month = 0
+	indiv = 18
+	{
+	}
+	
+	year = 0
+	month = 0
+	indiv = -1
+	{
+		food_kg = 0
+		roads_km = 100
+		hydrElDam_n = 1
+		car_n = 10
+		building_100m2 = 10
+	}
+}
+
+*PRODUCERS {
+	
+	P_assemble_CHAIR {
+		products_data
+		{
+			assemble_CHAIR
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_seat = 1
+				}
+			}
+		}
+	}
+	
+	P_set_seat {
+		products_data
+		{
+			set_seat
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_right_on_leftframe = 1
+					get_seat = 1
+				}
+			}
+		}
+	}
+	
+	P_get_seat {
+		products_data
+		{
+			get_seat
+			{
+				availableAtStep = 10
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_right_on_leftframe {
+		products_data
+		{
+			set_right_on_leftframe
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					assemble_leftframe = 1
+					get_right = 1
+				}
+			}
+		}
+	}
+	
+	P_assemble_leftframe {
+		products_data
+		{
+			assemble_leftframe
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_left = 1
+					get_rear = 1
+					get_front = 1
+					get_back = 1
+				}
+			}
+		}
+	}
+	
+	P_get_right {
+		products_data
+		{
+			get_right
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+
+		}
+	}
+	
+	P_get_left {
+		products_data
+		{
+			get_left
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_rear {
+		products_data
+		{
+			get_rear
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_front {
+		products_data
+		{
+			get_front
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_back {
+		products_data
+		{
+			get_back
+			{
+				availableAtStep = 13
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+
+
+
+	
+	P_set_TABLE {
+		products_data
+		{
+			set_TABLE
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_bowl_on_smalldinner = 1
+					set_glass = 1
+					set_mug = 1
+					set_fork = 1
+					set_knife = 1
+					set_spoon = 1
+				}
+			}
+		}
+	}
+	
+	P_set_bowl_on_smalldinner {
+		products_data
+		{
+			set_bowl_on_smalldinner
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_small_on_dinner = 1
+					get_bowl = 1
+				}
+			}
+		}
+	}
+	
+	P_get_bowl {
+		products_data
+		{
+			get_bowl
+			{
+				availableAtStep = 2
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_small_on_dinner {
+		products_data
+		{
+			set_small_on_dinner
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_small = 1
+					set_dinnerplate = 1
+				}
+			}
+		}
+	}
+	
+	P_get_small {
+		products_data
+		{
+			get_small
+			{
+				availableAtStep = 15
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_dinnerplate {
+		products_data
+		{
+			set_dinnerplate
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_dinnerplate = 1
+				}
+			}
+		}
+	}
+	
+	P_get_dinnerplate {
+		products_data
+		{
+			get_dinnerplate
+			{
+				availableAtStep = 10
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_knife {
+		products_data
+		{
+			set_knife
+			{
+				availableAtStep = 25
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_fork {
+		products_data
+		{
+			set_fork
+			{
+				availableAtStep = 12
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_spoon {
+		products_data
+		{
+			set_spoon
+			{
+				availableAtStep = 4
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_mug {
+		products_data
+		{
+			set_mug
+			{
+				availableAtStep = 8
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_glass {
+		products_data
+		{
+			set_glass
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+
+
+	P_food {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			food_kg
+			{
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.0001
+				}
+				ConsumedPerUnit
+				{
+					bread_kg = 0.5
+					meat_kg = 0.5
+				}
+			}
+		}
+	}
+
+	P_roads {
+		immobilizedMinimums
+		{
+			truck10tm_n = 0
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			roads_km {
+				totalWorkPerUnit = 240
+				nonConsumedPerUnit
+				{
+					truck10tm_n = 2
+					machinery_m3 = 100
+				}
+				ConsumedPerUnit
+				{
+					energy_Mwh = 1
+					trsp10tm_km = 1000
+					tar_tm = 100
+				}
+			}
+		}
+	}
+
+	P_transport {
+		immobilizedMinimums
+		{
+			cart2tm_n = 0
+			truck10tm_n = 0
+		}
+		products_data
+		{
+			trsp2tm_km {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					cart2tm_n = 0.02
+					cow_n = 0.002
+				}
+				ConsumedPerUnit
+				{
+				}
+			}
+			trsp10tm_km {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.002
+					truck10tm_n = 0.002
+				}
+				ConsumedPerUnit
+				{
+					energy_kwh = 5
+				}
+			}
+		}
+	}
+
+	P_carfactory {
+		immobilizedMinimums
+		{
+			building_100m2 = 0
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			car_n {
+				lifetimeSteps = 240
+				delayMonths = 3
+				nonConsumedPerUnit
+				{
+					workers_n = 2
+					building_100m2 = 2
+					machinery_m3 = 50
+				}
+				ConsumedPerUnit
+				{
+					machinery_m3 = 10
+				}
+			}
+			truck10tm_n {
+				lifetimeSteps = 480
+				delayMonths = 6
+				nonConsumedPerUnit
+				{
+					workers_n = 4
+					building_100m2 = 2
+					machinery_m3 = 150
+				}
+				ConsumedPerUnit
+				{
+					machinery_m3 = 60
+				}
+			}
+		}
+	}
+
+	P_builder {
+		immobilizedMinimums
+		{
+			machinery_m3 = 0
+			building_100m2 = 1
+			truck10tm_n = 1
+		}
+		products_data
+		{
+			building_100m2 {
+				totalWorkPerUnit = 56
+				nonConsumedPerUnit
+				{
+					building_100m2 = 0.5
+					machinery_m3 = 50
+					truck10tm_n = 1
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 100
+					door_n = 6
+					window_n = 4
+				}
+			}
+			hydrElDam_n {
+				totalWorkPerUnit = 3000
+				nonConsumedPerUnit
+				{
+					building_100m2 = 30
+					machinery_m3 = 100
+					truck10tm_n = 6
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 1e4
+				}
+			}
+			home_n {
+				totalWorkPerUnit = 56
+				nonConsumedPerUnit
+				{
+					building_100m2 = 0.5
+					machinery_m3 = 50
+					truck10tm_n = 1
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 120
+					door_n = 10
+					window_n = 8
+					trsp2tm_km = 10
+				}
+			}
+		}
+	}
+
+	P_electCompany {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			energy_kwh {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					machinery_m3 = 0.001
+					building_100m2 = 0.003
+				}
+			}
+			energy_Mwh {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.3
+					machinery_m3 = 1.0
+					building_100m2 = 3
+				}
+			}
+		}
+	}
+	
+	P_leather&meat {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			meat_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.00001
+				}
+				ConsumedPerUnit
+				{
+					cow_n = 0.002
+				}
+				consumedCostFraction
+				{
+					cow_n = 0.9
+				}
+			}
+
+			leather_m2 {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					building_100m2 = 0.002
+				}
+				ConsumedPerUnit
+				{
+					cow_n = 0.2
+				}
+				consumedCostFraction
+				{
+					cow_n = 0.1
+				}
+			}
+		}
+	}
+
+	P_coal {
+		products_data
+		{
+			coal_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+				}
+			}
+		}
+	}
+
+	P_metal {
+		products_data
+		{
+			metal_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 1
+				}
+			}
+		}
+	}
+
+	P_tools {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			tools_kg {
+				lifetimeSteps = 36
+				delayMonths = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.01
+					building_100m2 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 0.1
+					metal_kg = 1.0
+				}
+			}
+		}
+	}
+
+	P_carpentry {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			door_n {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.05
+					building_100m2 = 0.05
+					tools_kg = 2
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 15
+					metal_kg = 1
+				}
+			}
+			window_n {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.2
+					building_100m2 = 0.2
+					tools_kg = 3
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 5
+					glass_m2 = 1
+					metal_kg = 1
+				}
+			}
+			cart2tm_n {
+				lifetimeSteps = 60
+				nonConsumedPerUnit
+				{
+					workers_n = 0.3
+					building_100m2 = 0.5
+					tools_kg = 10
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 300
+					metal_kg = 20
+				}
+			}
+		}
+	}
+
+	P_glass {
+		products_data
+		{
+			glass_m2 {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 1
+				}
+			}
+		}
+	}
+
+	P_machinery {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			machinery_m3 {
+				lifetimeSteps = 120
+				delayMonths = 5
+				nonConsumedPerUnit
+				{
+					workers_n = 0.1
+					building_100m2 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					rubber_kg = 10
+					glass_m2 = 0.5
+					coal_kg = 50
+					metal_kg = 100
+				}
+			}
+		}
+	}
+
+	P_bakery {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+			machinery_m3 = 1
+		}
+		products_data
+		{
+			bread_kg {
+				lifetimeSteps = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.001
+					machinery_m3 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					wheat_kg = 1.1
+					coal_kg = 0.01
+				}
+			}
+		}
+	}
+
+	P_wood {
+		products_data
+		{
+			wood_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+				}
+			}
+		}
+	}
+
+	P_tar {
+		products_data
+		{
+			tar_tm {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.1
+				}
+			}
+		}
+	}
+
+	P_brickmortar {
+		products_data
+		{
+			brickmortar_m {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.05
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 5
+				}
+			}
+		}
+	}
+
+	P_rubber {
+		immobilizedMinimums
+		{
+			land_10m2 = 0
+		}
+		products_data
+		{
+			rubber_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+					land_10m2 = 0.1
+				}
+			}
+		}
+	}
+
+	P_cropfield {
+		immobilizedMinimums
+		{
+			land_10m2 = 0
+		}
+		products_data
+		{
+			wheat_kg
+			{
+				initMonth = 3
+				delayMonths = 5
+				nonConsumedPerUnit
+				{
+					workers_n = 0.00005
+					land_10m2 = 1
+				}
+			}
+			cotton_kg
+			{
+				initMonth = 5
+				delayMonths = 4
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					land_10m2 = 0.1
+				}
+			}
+		}
+	}
+
+	P_cowFarm {
+		immobilizedMinimums
+		{
+			land_10m2 = 1000
+		}
+		products_data
+		{
+			cow_n
+			{
+				delayMonths = 12
+				nonConsumedPerUnit
+				{
+					workers_n = 0.01
+					land_10m2 = 1
+				}
+				ConsumedPerUnit
+				{
+					wheat_kg = 100
+				}
+			}
+		}
+	}
+
+	P_land {
+		immobilizedMinimums
+		{
+			machinery_m3 = 20
+		}
+		products_data
+		{
+			land_10m2 {
+				delayMonths = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.002
+					machinery_m3 = 0.01
+				}
+			}
+		}
+	}
+
+	P_garment {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			trousers_n {
+				lifetimeSteps = 24
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					building_100m2 = 0.1
+				}
+				ConsumedPerUnit
+				{
+					cotton_kg = 0.5
+				}
+			}
+			jacket_n {
+				lifetimeSteps = 36
+				nonConsumedPerUnit
+				{
+					workers_n = 0.2
+					building_100m2 = 0.1
+				}
+				ConsumedPerUnit
+				{
+					cotton_kg = 2
+				}
+			}
+		}
+	}
+
+	P_shoes {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			shoes_n {
+				lifetimeSteps = 24
+				nonConsumedPerUnit
+				{
+					workers_n = 0.005
+					building_100m2 = 0.0005
+				}
+				ConsumedPerUnit
+				{
+					leather_m2 = 0.05
+					rubber_kg = 0.2
+				}
+			}
+		}
+	}
+}
+
+
+
+
+===============================================
+Example 3.- SINGLE ROBOT example of intertwined  
+execution of two tasks (assemble_chair and set_table) as
+ parts become available in random order (see delayMonths values,
+try different sequences).
+The value of nIndividuals will be adjusted by the program.
+
+Months are execution Steps, set nYears as high as needed for
+ the algorithm to complete the task sequence.
+==================================================
+
+CONTROL_VARIABLES {
+	
+	0	 bRobotsColony
+	1	 bSingleRobot
+	
+	4   nYears
+	1000  nIndividuals
+	
+	1  PlotEveryNsteps
+	3  LineWidth
+	8  MaxNplotCurves
+	200  MaxNplotIndividuals
+	
+	0	bWriteTransactions
+	0  WriteIndivN
+
+	0	bFixedPrices	
+
+	0  MaxNBanks
+	1000000  MonetaryBasePerCapita
+	1  LiabilityRatePer1000
+	3  AssetRatePer1000
+	200000  BanksInitCapital
+	2  BanksRateFactor
+	1  ReserveRatioPer100
+	
+	15	VATPer100
+	20	TaxPer100
+	10  PayUnemplPer100
+	
+	48  MaxUnusedTimestps
+	1000  ProducerAssignmentPer1000
+
+	40  nMaxInteractingNeighbors
+	120  PriceProfitPer100
+	120  PriceAdaptDefaultPer100
+}
+
+GOODS {
+	assemble_CHAIR
+	set_right_on_leftframe
+	assemble_leftframe
+	set_seat
+	get_seat
+	get_right
+	get_left
+	get_rear
+	get_front
+	get_back
+	
+	set_TABLE
+	set_bowl_on_smalldinner
+	get_bowl
+	set_small_on_dinner
+	get_small
+	set_dinnerplate
+	get_dinnerplate
+	set_knife
+	set_fork
+	set_spoon
+	set_mug
+	set_glass
+
+	
+	home_n
+	car_n
+	truck10tm_n
+	roads_km
+	hydrElDam_n
+	energy_Mwh
+	
+	cart2tm_n
+	trousers_n
+	energy_kwh
+	machinery_m3
+	window_n
+	leather_m2
+	meat_kg
+	brickmortar_m
+	cow_n
+	bread_kg
+	wheat_kg
+	cotton_kg
+	glass_m2
+	wood_kg
+	land_10m2
+	tar_tm
+	rubber_kg
+	coal_kg
+	metal_kg
+	
+	door_n
+	tools_kg
+	
+	building_100m2
+	
+	jacket_n
+	trsp10tm_km
+	trsp2tm_km
+	shoes_n
+}
+
+GOODS_I_WISH {
+	
+	year = 0
+	month = 0
+	indiv = -9
+	{
+		food_kg = 0
+		jacket_n = 0
+		shoes_n = 0
+		car_n = 0
+		home_n = 0
+	}
+	
+	year = 0
+	month = 0
+	indiv = 0
+	{
+		assemble_CHAIR = 1
+		set_TABLE = 1
+	}
+	
+	year = 9990
+	month = 0
+	indiv = -1
+	{
+		food_kg = 0
+		roads_km = 100
+		hydrElDam_n = 1
+		car_n = 10
+		building_100m2 = 10
+	}
+}
+
+PRODUCERS {
+	
+	P_assemble_CHAIR {
+		products_data
+		{
+			assemble_CHAIR
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_seat = 1
+				}
+			}
+		}
+	}
+	
+	P_set_seat {
+		products_data
+		{
+			set_seat
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_right_on_leftframe = 1
+					get_seat = 1
+				}
+			}
+		}
+	}
+	
+	P_get_seat {
+		products_data
+		{
+			get_seat
+			{
+				availableAtStep = 10
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_right_on_leftframe {
+		products_data
+		{
+			set_right_on_leftframe
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					assemble_leftframe = 1
+					get_right = 1
+				}
+			}
+		}
+	}
+	
+	P_assemble_leftframe {
+		products_data
+		{
+			assemble_leftframe
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_left = 1
+					get_rear = 1
+					get_front = 1
+					get_back = 1
+				}
+			}
+		}
+	}
+	
+	P_get_right {
+		products_data
+		{
+			get_right
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_left {
+		products_data
+		{
+			get_left
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_rear {
+		products_data
+		{
+			get_rear
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_front {
+		products_data
+		{
+			get_front
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_get_back {
+		products_data
+		{
+			get_back
+			{
+				availableAtStep = 13
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+
+
+
+	
+	P_set_TABLE {
+		products_data
+		{
+			set_TABLE
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_bowl_on_smalldinner = 1
+					set_glass = 1
+					set_mug = 1
+					set_fork = 1
+					set_knife = 1
+					set_spoon = 1
+				}
+			}
+		}
+	}
+	
+	P_set_bowl_on_smalldinner {
+		products_data
+		{
+			set_bowl_on_smalldinner
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					set_small_on_dinner = 1
+					get_bowl = 1
+				}
+			}
+		}
+	}
+	
+	P_get_bowl {
+		products_data
+		{
+			get_bowl
+			{
+				availableAtStep = 2
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_small_on_dinner {
+		products_data
+		{
+			set_small_on_dinner
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_small = 1
+					set_dinnerplate = 1
+				}
+			}
+		}
+	}
+	
+	P_get_small {
+		products_data
+		{
+			get_small
+			{
+				availableAtStep = 15
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_dinnerplate {
+		products_data
+		{
+			set_dinnerplate
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+				ConsumedPerUnit
+				{
+					get_dinnerplate = 1
+				}
+			}
+		}
+	}
+	
+	P_get_dinnerplate {
+		products_data
+		{
+			get_dinnerplate
+			{
+				availableAtStep = 10
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_knife {
+		products_data
+		{
+			set_knife
+			{
+				availableAtStep = 25
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_fork {
+		products_data
+		{
+			set_fork
+			{
+				availableAtStep = 12
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_spoon {
+		products_data
+		{
+			set_spoon
+			{
+				availableAtStep = 4
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_mug {
+		products_data
+		{
+			set_mug
+			{
+				availableAtStep = 8
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+	
+	P_set_glass {
+		products_data
+		{
+			set_glass
+			{
+				availableAtStep = 0
+				nonConsumedPerUnit
+				{
+					workers_n = 1
+				}
+			}
+		}
+	}
+
+
+	P_food {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			food_kg
+			{
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.0001
+				}
+				ConsumedPerUnit
+				{
+					bread_kg = 0.5
+					meat_kg = 0.5
+				}
+			}
+		}
+	}
+
+	P_roads {
+		immobilizedMinimums
+		{
+			truck10tm_n = 0
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			roads_km {
+				totalWorkPerUnit = 240
+				nonConsumedPerUnit
+				{
+					truck10tm_n = 2
+					machinery_m3 = 100
+				}
+				ConsumedPerUnit
+				{
+					energy_Mwh = 1
+					trsp10tm_km = 1000
+					tar_tm = 100
+				}
+			}
+		}
+	}
+
+	P_transport {
+		immobilizedMinimums
+		{
+			cart2tm_n = 0
+			truck10tm_n = 0
+		}
+		products_data
+		{
+			trsp2tm_km {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					cart2tm_n = 0.02
+					cow_n = 0.002
+				}
+				ConsumedPerUnit
+				{
+				}
+			}
+			trsp10tm_km {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.002
+					truck10tm_n = 0.002
+				}
+				ConsumedPerUnit
+				{
+					energy_kwh = 5
+				}
+			}
+		}
+	}
+
+	P_carfactory {
+		immobilizedMinimums
+		{
+			building_100m2 = 0
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			car_n {
+				lifetimeSteps = 240
+				delayMonths = 3
+				nonConsumedPerUnit
+				{
+					workers_n = 2
+					building_100m2 = 2
+					machinery_m3 = 50
+				}
+				ConsumedPerUnit
+				{
+					machinery_m3 = 10
+				}
+			}
+			truck10tm_n {
+				lifetimeSteps = 480
+				delayMonths = 6
+				nonConsumedPerUnit
+				{
+					workers_n = 4
+					building_100m2 = 2
+					machinery_m3 = 150
+				}
+				ConsumedPerUnit
+				{
+					machinery_m3 = 60
+				}
+			}
+		}
+	}
+
+	P_builder {
+		immobilizedMinimums
+		{
+			machinery_m3 = 0
+			building_100m2 = 1
+			truck10tm_n = 1
+		}
+		products_data
+		{
+			building_100m2 {
+				totalWorkPerUnit = 56
+				nonConsumedPerUnit
+				{
+					building_100m2 = 0.5
+					machinery_m3 = 50
+					truck10tm_n = 1
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 100
+					door_n = 6
+					window_n = 4
+				}
+			}
+			hydrElDam_n {
+				totalWorkPerUnit = 3000
+				nonConsumedPerUnit
+				{
+					building_100m2 = 30
+					machinery_m3 = 100
+					truck10tm_n = 6
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 1e4
+				}
+			}
+			home_n {
+				totalWorkPerUnit = 56
+				nonConsumedPerUnit
+				{
+					building_100m2 = 0.5
+					machinery_m3 = 50
+					truck10tm_n = 1
+				}
+				ConsumedPerUnit
+				{
+					brickmortar_m = 120
+					door_n = 10
+					window_n = 8
+					trsp2tm_km = 10
+				}
+			}
+		}
+	}
+
+	P_electCompany {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+			machinery_m3 = 0
+		}
+		products_data
+		{
+			energy_kwh {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					machinery_m3 = 0.001
+					building_100m2 = 0.003
+				}
+			}
+			energy_Mwh {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.3
+					machinery_m3 = 1.0
+					building_100m2 = 3
+				}
+			}
+		}
+	}
+	
+	P_leather&meat {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			meat_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.00001
+				}
+				ConsumedPerUnit
+				{
+					cow_n = 0.002
+				}
+				consumedCostFraction
+				{
+					cow_n = 0.9
+				}
+			}
+
+			leather_m2 {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					building_100m2 = 0.002
+				}
+				ConsumedPerUnit
+				{
+					cow_n = 0.2
+				}
+				consumedCostFraction
+				{
+					cow_n = 0.1
+				}
+			}
+		}
+	}
+
+	P_coal {
+		products_data
+		{
+			coal_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+				}
+			}
+		}
+	}
+
+	P_metal {
+		products_data
+		{
+			metal_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 1
+				}
+			}
+		}
+	}
+
+	P_tools {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			tools_kg {
+				lifetimeSteps = 36
+				delayMonths = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.01
+					building_100m2 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 0.1
+					metal_kg = 1.0
+				}
+			}
+		}
+	}
+
+	P_carpentry {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			door_n {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.05
+					building_100m2 = 0.05
+					tools_kg = 2
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 15
+					metal_kg = 1
+				}
+			}
+			window_n {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.2
+					building_100m2 = 0.2
+					tools_kg = 3
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 5
+					glass_m2 = 1
+					metal_kg = 1
+				}
+			}
+			cart2tm_n {
+				lifetimeSteps = 60
+				nonConsumedPerUnit
+				{
+					workers_n = 0.3
+					building_100m2 = 0.5
+					tools_kg = 10
+				}
+				ConsumedPerUnit
+				{
+					wood_kg = 300
+					metal_kg = 20
+				}
+			}
+		}
+	}
+
+	P_glass {
+		products_data
+		{
+			glass_m2 {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 1
+				}
+			}
+		}
+	}
+
+	P_machinery {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			machinery_m3 {
+				lifetimeSteps = 120
+				delayMonths = 5
+				nonConsumedPerUnit
+				{
+					workers_n = 0.1
+					building_100m2 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					rubber_kg = 10
+					glass_m2 = 0.5
+					coal_kg = 50
+					metal_kg = 100
+				}
+			}
+		}
+	}
+
+	P_bakery {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+			machinery_m3 = 1
+		}
+		products_data
+		{
+			bread_kg {
+				lifetimeSteps = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					building_100m2 = 0.001
+					machinery_m3 = 0.01
+				}
+				ConsumedPerUnit
+				{
+					wheat_kg = 1.1
+					coal_kg = 0.01
+				}
+			}
+		}
+	}
+
+	P_wood {
+		products_data
+		{
+			wood_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+				}
+			}
+		}
+	}
+
+	P_tar {
+		products_data
+		{
+			tar_tm {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.1
+				}
+			}
+		}
+	}
+
+	P_brickmortar {
+		products_data
+		{
+			brickmortar_m {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.05
+				}
+				ConsumedPerUnit
+				{
+					coal_kg = 5
+				}
+			}
+		}
+	}
+
+	P_rubber {
+		immobilizedMinimums
+		{
+			land_10m2 = 0
+		}
+		products_data
+		{
+			rubber_kg {
+				nonConsumedPerUnit
+				{
+					workers_n = 0.001
+					land_10m2 = 0.1
+				}
+			}
+		}
+	}
+
+	P_cropfield {
+		immobilizedMinimums
+		{
+			land_10m2 = 0
+		}
+		products_data
+		{
+			wheat_kg
+			{
+				initMonth = 3
+				delayMonths = 5
+				nonConsumedPerUnit
+				{
+					workers_n = 0.00005
+					land_10m2 = 0.03
+				}
+			}
+			cotton_kg
+			{
+				initMonth = 5
+				delayMonths = 4
+				nonConsumedPerUnit
+				{
+					workers_n = 0.0001
+					land_10m2 = 0.1
+				}
+			}
+		}
+	}
+
+	P_cowFarm {
+		immobilizedMinimums
+		{
+			land_10m2 = 1000
+		}
+		products_data
+		{
+			cow_n
+			{
+				delayMonths = 12
+				nonConsumedPerUnit
+				{
+					workers_n = 0.01
+					land_10m2 = 1
+				}
+				ConsumedPerUnit
+				{
+					wheat_kg = 100
+				}
+			}
+		}
+	}
+
+	P_land {
+		immobilizedMinimums
+		{
+			machinery_m3 = 20
+		}
+		products_data
+		{
+			land_10m2 {
+				delayMonths = 1
+				nonConsumedPerUnit
+				{
+					workers_n = 0.002
+					machinery_m3 = 0.01
+				}
+			}
+		}
+	}
+
+	P_garment {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			trousers_n {
+				lifetimeSteps = 24
+				nonConsumedPerUnit
+				{
+					workers_n = 0.02
+					building_100m2 = 0.1
+				}
+				ConsumedPerUnit
+				{
+					cotton_kg = 0.5
+				}
+			}
+			jacket_n {
+				lifetimeSteps = 36
+				nonConsumedPerUnit
+				{
+					workers_n = 0.2
+					building_100m2 = 0.1
+				}
+				ConsumedPerUnit
+				{
+					cotton_kg = 2
+				}
+			}
+		}
+	}
+
+	P_shoes {
+		immobilizedMinimums
+		{
+			building_100m2 = 1
+		}
+		products_data
+		{
+			shoes_n {
+				lifetimeSteps = 24
+				nonConsumedPerUnit
+				{
+					workers_n = 0.005
+					building_100m2 = 0.0005
+				}
+				ConsumedPerUnit
+				{
+					leather_m2 = 0.05
+					rubber_kg = 0.2
+				}
+			}
+		}
+	}
+}
+
